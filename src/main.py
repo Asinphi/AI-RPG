@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from typing import List
 from src.board import Board
 from src.boardmatrix import BoardMatrix
+from src.twodarray import TwoDArray
 from src.gpt import *
 import random
 
@@ -59,7 +60,7 @@ def get_adjlist():
     board = Board()
     return JSONResponse(content=board.get_adj_list())
 
-@app.get("/adjacency-matrix")
-def get_adjmatrix():
-    board = BoardMatrix()
-    return JSONResponse(content=board.get_matrix())
+@app.get("/twod-array")
+def get_twod_arr():
+    board = TwoDArray()
+    return JSONResponse(content=board.get_array())
