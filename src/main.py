@@ -2,7 +2,10 @@ from fastapi import FastAPI, Request, Query, Body
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 from typing import List
+from board import Board
+from boardmatrix import BoardMatrix
 
 app = FastAPI()
 
@@ -42,3 +45,14 @@ def get_node_data():
 def get_player_response():
     #Get player's response to action, return node response
     return
+
+@app.get("/adjacency-list")
+def get_adjlist():
+    board = Board()
+    return JSONResponse(content=board.get_adj_list())
+
+@app.get("/adjacency-matrix")
+def get_adjmatrix():
+    board = BoardMatrix()
+    return JSONResponse(content=board.get_matrix())
+
