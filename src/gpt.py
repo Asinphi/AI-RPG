@@ -102,8 +102,9 @@ def generate_node_name(seed, setting = ""):
                  f"and the seed, {seed}"
     return openai_response_call(fullprompt)
 
-def generate_value(item_name = ""):
-    fullprompt = f"Generate a price for the following item, {item_name}"
+def generate_treasure(setting):
+    fullprompt = f"Generate and describe a rare treasure for the player of a fantasy rpg to find using the following"\
+                 f" setting, {setting}"
     return openai_response_call(fullprompt)
 
 def generate_node_response(seed, context="", setting="", action=""):
@@ -115,23 +116,17 @@ def gpt_event_call(tile, seed, setting, node_name, context=""):
     if(tile == "mystery"):
         tile = ("event", "monster", "treasure")[math.floor(random.random() * 3)]
     if(tile == "event"):
-        return generate_node_events(seed,context, setting, node_name)
+        return generate_node_events(seed, context, setting, node_name)
     elif(tile == "monster"):
         return generate_monster(seed, node_name, setting)
     elif(tile == "treasure"):
-        #generate a treasure item?
-        return
+        return generate_treasure(setting)
 
 def gpt_response_call(tile, seed, setting, user_response):
-    if(tile == "mystery"):
-        tile = ("event", "monster", "treasure")[math.floor(random.random() * 3)]
     if(tile == "event"):
         return generate_node_response(seed, context="", setting=setting, action = user_response)
     elif(tile == "monster"):
         return generate_monster_response(context="", setting=setting, action=user_response)
-    elif(tile == "treasure"):
-        #generate a treasure item?
-        return
 
 def hp_gained_or_lost(gpt_response):
     fullprompt = f"Using the context of {gpt_response}, generate an integer number between -2 and 2" \
@@ -142,5 +137,5 @@ def hp_gained_or_lost(gpt_response):
 def gold_gained_or_lost(gpt_response):
     fullprompt = f"Using the context of {gpt_response}, generate an integer number to represent the amount of gold" \
                  f" lost or gained by the player, if applicable, meaning there was an event similar to events such as"\
-                 f" a robbery or finding a bag of gold"
+                 f" a robbery or finding a bag of gold or treasure"
     return openai_response_call(fullprompt)

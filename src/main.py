@@ -59,7 +59,11 @@ def get_node_data(node_id: int = Query(..., title="node-id"), player_id: int = Q
         event = gpt_event_call(tile, seed, setting, node_name)
     else:
         event = ""
-    response_data = {"node_name": node_name, "event": event, "player-id": player_id}
+    if(tile == "treasure"):
+        treasure_worth = gold_gained_or_lost(event)
+    else:
+        treasure_worth = 0
+    response_data = {"node_name": node_name, "event": event, "player-id": player_id, "treasure": treasure_worth}
     return JSONResponse(content=response_data)
 @app.post("/interact")
 def get_player_response(user_text: str, node_id: int = Query(..., title="node-id"), player_id: int = Query(..., title="player-id")):
