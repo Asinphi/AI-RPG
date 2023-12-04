@@ -11,19 +11,32 @@ config_version=5
 [application]
 
 config/name="AI RPG"
+run/main_scene="res://scenes/world.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[autoload]
+
+WorldGraph="*res://scripts/world_graph.gd"
+Messenger="*res://scripts/messenger.gd"
+
+[debug]
+
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/integer_division=0
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/stretch/scale_mode="integer"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
