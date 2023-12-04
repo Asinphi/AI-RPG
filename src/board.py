@@ -2,23 +2,28 @@ from tile import Tile
 
 class Board:
     # graph implementation using an adjacency list
-    def __init__(self, width, height):
+    def __init__(self, width = 320, height = 320):
         self.width = width
-        self.heigh = height
+        self.height = height
         self.tiles = {}
         self.graph = {}
-        self.playertile = str(height // 2) + "0" + str(width // 2)
-        identifier = ""
+        self.playertile = 0
+        identifier = 0
         for i in range(height):
-            for j in range(width):
-                identifier = str(i) + "0" + str(j)
+            for j in range(0, width):
+                identifier = width * i + j
                 self.tiles[identifier] = Tile(identifier)
                 self.graph[identifier] = []
 
+                
                 for m in range(max(0, i - 1), min(i + 2, height)):
-                    for n in range(max(0, j - 1), min(j + 2, width)):
-                        self.graph[identifier].append(str(m) + "0" + str(n))
+                    self.graph[identifier].append(width * m + j)
                 self.graph[identifier].remove(identifier)
+                for n in range(max(0, j - 1), min(j + 2, width)):
+                    self.graph[identifier].append(width * i + n)
+                self.graph[identifier].remove(identifier)
+                    
+
 
     # print adjacency list (for testing)
     def printadjlist(self):
@@ -27,10 +32,6 @@ class Board:
             print(self.graph[tile])
             print()
     
-    def move_player(self, identifier):
-        self.tiles[self.playertile].hasplayer = False
-        self.playertile = identifier
-        self.tiles[identifier].hasplayer = True
 
     # returns an adjacency list of all the tiles within a set radius of the player
     def get_near_player(self, range = 30):
@@ -46,4 +47,8 @@ class Board:
             if (level < range):
                 for tile in self.graph[identifier]:
                     self.get_tiles(tile, range, level + 1, adjlist, added)
+
+    # returns entire adjacency list
+    def get_adj_list(self):
+        return self.graph
     
