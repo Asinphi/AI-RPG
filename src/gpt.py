@@ -122,11 +122,11 @@ def gpt_event_call(tile, seed, setting, node_name, context=""):
     elif(tile == "treasure"):
         return generate_treasure(setting)
 
-def gpt_response_call(tile, seed, setting, user_response):
+def gpt_response_call(tile, seed, setting, user_response, node_context=""):
     if(tile == "event"):
-        return generate_node_response(seed, context="", setting=setting, action = user_response)
+        return generate_node_response(seed, context=node_context, setting=setting, action = user_response)
     elif(tile == "monster"):
-        return generate_monster_response(context="", setting=setting, action=user_response)
+        return generate_monster_response(context=node_context, setting=setting, action=user_response)
 
 def hp_gained_or_lost(gpt_response):
     fullprompt = f"Using the context of {gpt_response}, generate an integer number between -2 and 2" \
