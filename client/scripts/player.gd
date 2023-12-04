@@ -8,9 +8,9 @@ signal tile_reached(tile_id: int)
 const SPEED := 2.0  # In tiles per second
 
 
-var username: String
-var tile_coords: Vector2i  = Vector2i(0, 0) # Map coordinates of current tile
-var tile_id := 0  # id of current tile
+@export var username: String
+@export var tile_coords: Vector2i  = Vector2i(-1, 0) # Map coordinates of current tile
+@export var tile_id := 0  # id of current tile
 
 var _last_move_queued: float
 

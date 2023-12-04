@@ -81,6 +81,7 @@ _data = {
 }
 
 [node name="Player" type="Sprite2D"]
+z_index = 50
 texture = ExtResource("1_phu64")
 offset = Vector2(0, -40)
 hframes = 3

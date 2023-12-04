@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvkritndqrtl3"]
+[gd_scene load_steps=12 format=3 uid="uid://bvkritndqrtl3"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_5ghl0"]
 [ext_resource type="Texture2D" uid="uid://dass28uqpxfjc" path="res://tilesets/fd_dungeon.png" id="1_8j6dy"]
-[ext_resource type="Texture2D" uid="uid://rxpm77mr3iad" path="res://tilesets/question_mark.png" id="2_4lo66"]
+[ext_resource type="Texture2D" uid="uid://chwajiq72t0di" path="res://tilesets/tile_icons.png" id="3_10350"]
 [ext_resource type="Texture2D" uid="uid://v2jooq4fk5hk" path="res://sprites/tile_overlay.png" id="3_bhcdt"]
 [ext_resource type="PackedScene" uid="uid://ocqsk16qg8sc" path="res://scenes/local_player.tscn" id="5_mh2d6"]
 [ext_resource type="Script" path="res://scripts/tile_select.gd" id="5_uj6xc"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="6_ms85c"]
+[ext_resource type="PackedScene" uid="uid://o34y2ooavm03" path="res://scenes/hud.tscn" id="8_cn8cr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jt8x5"]
 texture = ExtResource("1_8j6dy")
@@ -991,13 +992,16 @@ texture = ExtResource("1_8j6dy")
 30:40/0 = 0
 31:40/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vetvh"]
-texture = ExtResource("2_4lo66")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xqqb5"]
+texture = ExtResource("3_10350")
 0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_437ot"]
 sources/0 = SubResource("TileSetAtlasSource_jt8x5")
-sources/1 = SubResource("TileSetAtlasSource_vetvh")
+sources/1 = SubResource("TileSetAtlasSource_xqqb5")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_5ghl0")
@@ -1008,10 +1012,9 @@ scale = Vector2(6, 6)
 tile_set = SubResource("TileSet_437ot")
 format = 2
 layer_0/name = "tiles"
-layer_0/tile_data = PackedInt32Array(131072, 1179648, 22, 196608, 983040, 22, 262144, 786432, 22, 131073, 1114112, 22, 131074, 1114112, 22, 3, 1048576, 22, 65539, 1048576, 22, 131075, 917504, 22, 196611, 1048576, 22, 262147, 851968, 22, 4, 851968, 22, 65540, 917504, 22, 131076, 1179648, 22, 196612, 1179648, 22, 196613, 917504, 22, 196614, 1179648, 22, 7, 1048576, 22, 65543, 983040, 22, 131079, 786432, 22, 196615, 786432, 22, 262151, 917504, 22, -65533, 786432, 22, -131069, 983040, 22, -131068, 983040, 22, -131067, 1048576, 22, -131066, 1114112, 22, -131065, 917504, 22, -131064, 786432, 22, -131063, 1048576, 22, -65527, 917504, 22, 8, 1179648, 22, 9, 1048576, 22)
 layer_1/name = "symbols"
 layer_1/z_index = 10
-layer_1/tile_data = PackedInt32Array(196613, 1, 0)
+layer_1/tile_data = PackedInt32Array()
 
 [node name="TileSelect" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -1027,3 +1030,8 @@ position = Vector2(48, 48)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("6_ms85c")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" parent="CanvasLayer" instance=ExtResource("8_cn8cr")]
+mouse_filter = 1

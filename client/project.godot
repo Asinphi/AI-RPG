@@ -20,6 +20,8 @@ config/icon="res://icon.svg"
 
 WorldGraph="*res://scripts/world_graph.gd"
 Messenger="*res://scripts/messenger.gd"
+Remote="*res://scripts/remote.gd"
+Common="*res://scripts/common.gd"
 
 [debug]
 
