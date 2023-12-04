@@ -994,10 +994,22 @@ texture = ExtResource("1_8j6dy")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xqqb5"]
 texture = ExtResource("3_10350")
+0:0/next_alternative_id = 2
 0:0/0 = 0
+0:0/1 = 1
+0:0/1/modulate = Color(0.55, 0.55, 0.55, 0.737255)
+1:0/next_alternative_id = 2
 1:0/0 = 0
+1:0/1 = 1
+1:0/1/modulate = Color(0.55, 0.55, 0.55, 0.737255)
+2:0/next_alternative_id = 2
 2:0/0 = 0
+2:0/1 = 1
+2:0/1/modulate = Color(0.55, 0.55, 0.55, 0.737255)
+3:0/next_alternative_id = 2
 3:0/0 = 0
+3:0/1 = 1
+3:0/1/modulate = Color(0.55, 0.55, 0.55, 0.737255)
 
 [sub_resource type="TileSet" id="TileSet_437ot"]
 sources/0 = SubResource("TileSetAtlasSource_jt8x5")
@@ -1027,6 +1039,10 @@ script = ExtResource("5_uj6xc")
 [node name="LocalPlayer" parent="." instance=ExtResource("5_mh2d6")]
 unique_name_in_owner = true
 position = Vector2(48, 48)
+health = null
+max_health = null
+username = null
+tile_coords = Vector2i(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("6_ms85c")

@@ -5,5 +5,7 @@
 
 [node name="LocalPlayer" instance=ExtResource("1_tj2cc")]
 script = ExtResource("2_bh2tu")
-health = 7
-max_health = 7
+health = null
+max_health = null
+username = null
+tile_coords = null

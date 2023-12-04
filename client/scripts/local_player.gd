@@ -35,6 +35,10 @@ func _on_cell_clicked(coords: Vector2i) -> void:
 
 
 func _on_tile_reached(tile_id: int) -> void:
-	if not WorldGraph.visited_tiles[tile_id] and WorldGraph.type_types[tile_id] != WorldGraph.TileType.BLANK:
+	if not WorldGraph.visited_tiles.get(tile_id) \
+	and WorldGraph.tile_types[tile_id] != WorldGraph.TileType.BLANK:
 		position_tween.kill()
-		Remote.enter_tile()
+		animation_player.stop()
+		animation_player.play("RESET")
+		WorldGraph.set_tile_visited(tile_id)
+		Remote.enter_tile(tile_id)
