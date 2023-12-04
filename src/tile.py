@@ -1,4 +1,4 @@
-from gpt import generate_node_events
+from src.gpt import generate_node_events
 
 class Tile:
     def __init__(self, identifier):

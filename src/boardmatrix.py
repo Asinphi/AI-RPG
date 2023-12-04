@@ -1,4 +1,4 @@
-from tile import Tile
+from src.tile import Tile
 
 class BoardMatrix:
     def __init__(self, width = 320, height = 320):

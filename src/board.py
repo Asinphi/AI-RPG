@@ -1,4 +1,4 @@
-from tile import Tile
+from src.tile import Tile
 
 class Board:
     # graph implementation using an adjacency list

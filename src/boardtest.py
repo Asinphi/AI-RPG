@@ -1,4 +1,4 @@
-from board import Board
+from src.board import Board
 from boardmatrix import BoardMatrix
 
 board = Board()

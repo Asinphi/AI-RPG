@@ -3,9 +3,9 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import List
-from board import Board
-from boardmatrix import BoardMatrix
-from .gpt import *
+from src.board import Board
+from src.boardmatrix import BoardMatrix
+from src.gpt import *
 import random
 
 app = FastAPI()
@@ -16,7 +16,7 @@ app.mount("/dist", StaticFiles(directory="dist"), name="dist")
 # Use the Vite-generated templates; the dev server view won't be parsed
 templates = Jinja2Templates(directory="dist/src/templates")
 
-setting = generate_setting()
+# setting = generate_setting()
 def render_template(path: str, request: Request, **kwargs):
     return templates.TemplateResponse(path, {"request": request, **kwargs})
 
