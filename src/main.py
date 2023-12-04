@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Query, Body
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import List
@@ -45,7 +45,8 @@ def get_node_data(node_id: int = Query(..., title="Node ID")):
         event = gpt_call(tile, seed, setting, node_name,)
     else:
         event = ""
-    return {"node_name": node_name, "event": event}
+    response_data = {"node_name": node_name, "event": event}
+    return JSONResponse(content=response_data)
 @app.post("/interact")
 def get_player_response():
     #Get player's response to action, return node response
