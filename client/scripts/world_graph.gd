@@ -16,8 +16,8 @@ const TILE_ICONS: Dictionary = {
 	TileType.MYSTERY: 0,
 	TileType.EVENT: 1,
 	TileType.MERCHANT: 0,
-	TileType.MONSTER: 3,
-	TileType.TREASURE: 2,
+	TileType.MONSTER: 2,
+	TileType.TREASURE: 3,
 }
 
 var astar: AStarGrid2D = AStarGrid2D.new()
