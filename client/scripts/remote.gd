@@ -6,11 +6,11 @@ const URL = "http://localhost:8000"
 func fetch_map(tile_map: TileMap) -> void:
 	var request := HTTPRequest.new()
 	add_child(request)
-	#request.request_completed.connect(_on_map_fetched.bind(tile_map))
+	request.request_completed.connect(_on_map_fetched.bind(tile_map))
 	
-	#var error := request.request(URL + "/adjacency-matrix")
-	#if error != OK:
-		#push_error("An error occurred in the map request: %s", error)
+	var error := request.request(URL + "/adjacency-list")
+	if error != OK:
+		push_error("An error occurred in the map request: %s", error)
 
 
 func enter_tile() -> void:

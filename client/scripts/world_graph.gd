@@ -33,7 +33,7 @@ func _ready() -> void:
 	Common.local_player.tile_reached.connect(_on_tile_reached)
 
 
-func load_adjacency_list(tile_map: TileMap, adj_list: Array[Array], origin_id := 0, 
+func load_adjacency_list(tile_map: TileMap, adj_list: Dictionary, origin_id := 0, 
 origin_coords := Vector2i()) -> void:
 	var region_size := Vector2i(MAX_TILES / 2, MAX_TILES / 2)
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
@@ -49,9 +49,9 @@ origin_coords := Vector2i()) -> void:
 	while not q.is_empty() and num_tiles < MAX_TILES:
 		var tile_id: int = q.pop_front()
 		var coords: Vector2i = id_to_coords[tile_id]
-		var neighbors := adj_list[tile_id]
+		var neighbors: Array = adj_list[str(tile_id)]
 		for i in range(neighbors.size()):
-			var neighbor_id: int = neighbors[i]
+			var neighbor_id: int = int(neighbors[i])
 			if not id_to_coords.get(neighbor_id):
 				var neighbor_coords: Vector2i = coords + DIRECTIONS[i]
 				_load_tile(tile_map, neighbor_id, neighbor_coords)
