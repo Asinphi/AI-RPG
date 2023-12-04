@@ -3,6 +3,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import List
+from .gpt import *
+import random
 
 app = FastAPI()
 
@@ -12,7 +14,7 @@ app.mount("/dist", StaticFiles(directory="dist"), name="dist")
 # Use the Vite-generated templates; the dev server view won't be parsed
 templates = Jinja2Templates(directory="dist/src/templates")
 
-
+setting = generate_setting()
 def render_template(path: str, request: Request, **kwargs):
     return templates.TemplateResponse(path, {"request": request, **kwargs})
 
@@ -34,11 +36,17 @@ def create_character():
 def get_map():
     #BFS, variable for depth, player_location, and graph itself
     return
-@app.post("/enter-node", response_model="") #Make an object with event + node name?
-def get_node_data():
-    #Get players location, generate a node name, and an event
-    return
-@app.post("/interact/?node=node-id", response_model= "")
+@app.post("/enter-node")
+def get_node_data(node_id: int = Query(..., title="Node ID")):
+    tile = choose_event_type(node_id)
+    seed = node_id
+    node_name = generate_node_name(seed)
+    if(tile != "blank"):
+        event = gpt_call(tile, seed, setting, node_name,)
+    else:
+        event = ""
+    return {"node_name": node_name, "event": event}
+@app.post("/interact")
 def get_player_response():
     #Get player's response to action, return node response
     return
