@@ -85,6 +85,7 @@ func _load_tile(tile_map: TileMap, id: int, coords: Vector2i) -> void:
 	tile_types[id] = tile_type
 	if tile_type != TileType.BLANK:
 		tile_map.set_cell(1, coords, 1, Vector2i(TILE_ICONS[tile_type], 0))
+		astar.set_point_weight_scale(coords, 10.0)
 
 
 func _on_tile_reached(tile_id: int):
