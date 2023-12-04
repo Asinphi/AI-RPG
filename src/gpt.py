@@ -35,12 +35,8 @@ def choose_event_type(node_id):
 def openai_response_call(prompt):
     response = client.chat.completions.create(
         messages=[
-            {
-                "role": "system",
-                "content": "You are generating things for a fantasy RPG",
-                "role": "assistant",
-                "content": prompt
-            }
+            {"role": "system", "content": "You are generating things for a fantasy RPG"},
+            {"role": "assistant", "content": prompt}
         ],
         model="gpt-3.5-turbo",
     )
@@ -49,7 +45,7 @@ def openai_response_call(prompt):
 #Generate a setting for the RPG
 def generate_setting():
     fullprompt=f"Give a short description of a fantasy setting for a role-playing game, " \
-            f"wherein a character has just entered an area",
+            f"wherein a character has just entered an area"
     return openai_response_call(fullprompt)
 
 #Generate an event for the player to respond to given a setting, location, and maybe context
@@ -63,7 +59,7 @@ def generate_node_events(seed ,context="", setting="", place_name = ""):
                      f"in the following setting, {setting}, using the seed" \
                      f"{seed}, with the event location being called {place_name}"
 
-        return openai_response_call(fullprompt)
+    return openai_response_call(fullprompt)
 
 
 #Generate an NPC for the player to interact with
@@ -103,7 +99,7 @@ def generate_node_name(seed, setting = ""):
     return openai_response_call(fullprompt)
 
 def generate_value(item_name = ""):
-    fullprompt = f"Generate a price for the following item, {item_name}",
+    fullprompt = f"Generate a price for the following item, {item_name}"
     return openai_response_call(fullprompt)
 
 def gpt_call(tile, seed, setting, node_name, context=""):
