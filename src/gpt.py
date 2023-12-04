@@ -5,7 +5,7 @@ import math
 
 
 client = OpenAI(
-    api_key=""
+    api_key="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"
 )
 
 def choose_event_type(node_id):
@@ -106,7 +106,12 @@ def generate_value(item_name = ""):
     fullprompt = f"Generate a price for the following item, {item_name}"
     return openai_response_call(fullprompt)
 
-def gpt_call(tile, seed, setting, node_name, context=""):
+def generate_node_response(seed, context="", setting="", action=""):
+    fullprompt = f"Generate a response to the player's action of {action}, with the context that {context}, and"\
+                 f"in the following setting, {setting}, using this seed, {seed}"
+    return openai_response_call(fullprompt)
+
+def gpt_event_call(tile, seed, setting, node_name, context=""):
     if(tile == "mystery"):
         tile = ("event", "monster", "treasure")[math.floor(random.random() * 3)]
     if(tile == "event"):
@@ -116,3 +121,26 @@ def gpt_call(tile, seed, setting, node_name, context=""):
     elif(tile == "treasure"):
         #generate a treasure item?
         return
+
+def gpt_response_call(tile, seed, setting, user_response):
+    if(tile == "mystery"):
+        tile = ("event", "monster", "treasure")[math.floor(random.random() * 3)]
+    if(tile == "event"):
+        return generate_node_response(seed, context="", setting=setting, action = user_response)
+    elif(tile == "monster"):
+        return generate_monster_response(context="", setting=setting, action=user_response)
+    elif(tile == "treasure"):
+        #generate a treasure item?
+        return
+
+def hp_gained_or_lost(gpt_response):
+    fullprompt = f"Using the context of {gpt_response}, generate an integer number between -2 and 2" \
+                 f"to represent the amount of health lost or gained by a player, if applicable, meaning there was an"\
+                 f" event such as a successful attack or healing"
+    return openai_response_call(fullprompt)
+
+def gold_gained_or_lost(gpt_response):
+    fullprompt = f"Using the context of {gpt_response}, generate an integer number to represent the amount of gold" \
+                 f" lost or gained by the player, if applicable, meaning there was an event similar to events such as"\
+                 f" a robbery or finding a bag of gold"
+    return openai_response_call(fullprompt)

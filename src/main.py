@@ -36,26 +36,6 @@ async def say_hello(name: str):
 def create_character():
     return
 
-@app.get("/map", response_model=List[int])
-def get_map():
-    #BFS, variable for depth, player_location, and graph itself
-    return
-@app.post("/enter-node")
-def get_node_data(node_id: int = Query(..., title="Node ID"), player_id: int = Query(..., title="Player ID")):
-    tile = choose_event_type(node_id)
-    seed = node_id
-    node_name = generate_node_name(seed)
-    if(tile != "blank"):
-        event = gpt_call(tile, seed, setting, node_name,)
-    else:
-        event = ""
-    response_data = {"node_name": node_name, "event": event, "player-id": player_id}
-    return JSONResponse(content=response_data)
-@app.post("/interact")
-def get_player_response():
-    #Get player's response to action, return node response
-    return
-
 @app.get("/adjacency-list")
 def get_adjlist():
     board = Board()
@@ -65,3 +45,33 @@ def get_adjlist():
 def get_twod_arr():
     board = TwoDArray()
     return JSONResponse(content=board.get_array())
+
+@app.get("/map", response_model=List[int])
+def get_map():
+    #BFS, variable for depth, player_location, and graph itself
+    return
+@app.post("/enter-node")
+def get_node_data(node_id: int = Query(..., title="node-id"), player_id: int = Query(..., title="player-id")):
+    tile = choose_event_type(node_id)
+    seed = node_id
+    node_name = generate_node_name(seed)
+    if(tile != "blank"):
+        event = gpt_event_call(tile, seed, setting, node_name)
+    else:
+        event = ""
+    response_data = {"node_name": node_name, "event": event, "player-id": player_id}
+    return JSONResponse(content=response_data)
+@app.post("/interact")
+def get_player_response(user_text: str, node_id: int = Query(..., title="node-id"), player_id: int = Query(..., title="player-id")):
+    user_response = user_text
+    #board.playertile = node_id     //Should update to current node
+    tile = choose_event_type(node_id)
+    seed = node_id
+    if(tile != "blank"):
+        event = gpt_response_call(tile, seed, setting, user_response)
+    else:
+        event = ""
+    gold_change = gold_gained_or_lost(event)
+    health_change = hp_gained_or_lost(event)
+    response_data = {"player-id": player_id, "response": event, "gold_change": gold_change, "health_change": health_change}
+    return JSONResponse(content=response_data)
