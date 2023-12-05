@@ -36,6 +36,7 @@ func _on_popup_toggled(title: String, desc: String):
 	tween.tween_property(panel, "anchor_right", 0.45, 0.5)
 	#get_tree().paused = true
 	submit_btn.disabled = false
+	text_edit.editable = true
 
 
 func _on_submitted():
@@ -45,6 +46,7 @@ func _on_submitted():
 		WorldGraph.coords_to_id[Common.local_player.tile_coords])
 	submit_btn.disabled = true
 	text_edit.editable = false
+	text_edit.text = ""
 	desc_label.text += "\n\n[color=orange]%s[/color]" % text_edit.text
 
 
