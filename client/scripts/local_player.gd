@@ -16,6 +16,7 @@ signal health_changed(new_health: int)
 	set(value):
 		max_health = value
 		health = min(health, max_health)
+@export var gold: int = 0
 
 
 # Called when the node enters the scene tree for the first time.

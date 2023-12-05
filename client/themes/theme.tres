@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d0msk5qlr7k8s"]
+
+[ext_resource type="Texture2D" uid="uid://btkpfb3bkc3in" path="res://sprites/button.png" id="1_8potd"]
+[ext_resource type="Texture2D" uid="uid://c6q3vxdqsgnqu" path="res://sprites/panel_9_slices.png" id="1_pcryd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hfpby"]
+texture = ExtResource("1_8potd")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+modulate_color = Color(0.678431, 0.678431, 0.678431, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dbi0"]
+texture = ExtResource("1_8potd")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x25dw"]
+texture = ExtResource("1_pcryd")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[resource]
+Button/styles/hover = SubResource("StyleBoxTexture_hfpby")
+Button/styles/normal = SubResource("StyleBoxTexture_5dbi0")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_x25dw")

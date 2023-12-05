@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvkritndqrtl3"]
+[gd_scene load_steps=13 format=3 uid="uid://bvkritndqrtl3"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_5ghl0"]
 [ext_resource type="Texture2D" uid="uid://dass28uqpxfjc" path="res://tilesets/fd_dungeon.png" id="1_8j6dy"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/tile_select.gd" id="5_uj6xc"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="6_ms85c"]
 [ext_resource type="PackedScene" uid="uid://o34y2ooavm03" path="res://scenes/hud.tscn" id="8_cn8cr"]
+[ext_resource type="PackedScene" uid="uid://d3kw0yb15lvux" path="res://scenes/event_popup.tscn" id="9_ts4oj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jt8x5"]
 texture = ExtResource("1_8j6dy")
@@ -1039,15 +1040,20 @@ script = ExtResource("5_uj6xc")
 [node name="LocalPlayer" parent="." instance=ExtResource("5_mh2d6")]
 unique_name_in_owner = true
 position = Vector2(48, 48)
-health = null
-max_health = null
-username = null
+health = 7
+max_health = 7
+gold = 0
+username = ""
 tile_coords = Vector2i(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+process_mode = 3
 script = ExtResource("6_ms85c")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Hud" parent="CanvasLayer" instance=ExtResource("8_cn8cr")]
 mouse_filter = 1
+
+[node name="EventPopup" parent="CanvasLayer" instance=ExtResource("9_ts4oj")]
+visible = false

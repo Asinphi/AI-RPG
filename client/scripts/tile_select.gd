@@ -22,5 +22,5 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and (event is InputEventMouseButton or event is InputEventScreenTouch):
-		if not event.pressed:
+		if event.pressed:
 			Messenger.tile_clicked.emit(tile_coords)

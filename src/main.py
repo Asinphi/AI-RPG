@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Query, Body
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 
 from src import board
@@ -13,6 +14,13 @@ import random
 from pydantic import BaseModel
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.mount("/dist", StaticFiles(directory="dist"), name="dist")
 
@@ -72,7 +80,8 @@ class Context(BaseModel):
     node_id: int
 
 @app.post("/interact")
-async def get_player_response(request: Context):
+async def get_player_response(request: Context = Body(...)):
+    print("A")
     node_context = request.context
     user_response = request.user_input
     player_id = request.player_id
@@ -84,7 +93,7 @@ async def get_player_response(request: Context):
         response = gpt_response_call(tile, seed, setting, user_response, node_context)
     else:
         response = ""
-    gold_change = int(gold_gained_or_lost(response))
+    gold_change = 0 #int(gold_gained_or_lost(response))
     health_change = int(hp_gained_or_lost(response))
     response_data = {"player-id": player_id, "response": response, "gold_change": gold_change, "health_change": health_change}
     return JSONResponse(content=response_data)
