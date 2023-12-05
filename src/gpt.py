@@ -5,7 +5,7 @@ import math
 
 
 client = OpenAI(
-    api_key="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"
+    api_key="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"
 )
 
 def choose_event_type(node_id):

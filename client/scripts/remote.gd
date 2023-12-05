@@ -1,7 +1,7 @@
 extends Node
 
 const URL = "http://127.0.0.1:8000"
-const USE_ADJACENCY_LIST = false  # Whether or not to use adjacency list or 2D array
+const USE_ADJACENCY_LIST = true  # Whether or not to use adjacency list or 2D array
 
 
 func fetch_map(tile_map: TileMap) -> void:

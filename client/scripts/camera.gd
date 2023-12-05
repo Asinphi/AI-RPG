@@ -22,4 +22,4 @@ func _on_popup_toggled_on(title: String, desc: String) -> void:
 
 
 func _on_popup_toggled_off() -> void:
-	target_offset = Vector2()
+	target_offset = Vector2(0, 0)

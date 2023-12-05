@@ -32,8 +32,8 @@ func _on_popup_toggled(title: String, desc: String):
 	visible = true
 	var tween := get_tree().create_tween().bind_node(self).set_parallel(true)
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(panel, "anchor_left", panel.anchor_left + 0.5, 0.5)
-	tween.tween_property(panel, "anchor_right", panel.anchor_right + 0.5, 0.5)
+	tween.tween_property(panel, "anchor_left", .05, 0.5)
+	tween.tween_property(panel, "anchor_right", 0.45, 0.5)
 	#get_tree().paused = true
 	submit_btn.disabled = false
 
@@ -68,3 +68,4 @@ func _on_overlay_pressed(event: InputEvent):
 			visible = false
 		)
 		get_tree().paused = false
+		Messenger.popup_toggled_off.emit()
