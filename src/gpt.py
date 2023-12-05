@@ -35,7 +35,7 @@ def choose_event_type(node_id):
 
 
 
-def openai_response_call(prompt, seed_num=0):
+def openai_response_call(prompt, seed_num=0, temperature=0.7):
     response = client.chat.completions.create(
         temperature = 0.7,
         n = 1,
@@ -136,8 +136,9 @@ def hp_gained_or_lost(gpt_response):
                  f" event such as a successful attack or healing. If the player is not harmed, such as when simply traversing" \
                  f" or successfully dodges a monster's attack, generate 0. If the player is harmed, such as being successfully" \
                  f" harmed by another being or falling, generate a negative number. If the player is helped, such as by eating" \
-                 f", healing themselves, or resting, generate a positive number. Only generate an integer, nothing else"
-    return openai_response_call(fullprompt)
+                 f", healing themselves, or resting, generate a positive number. Only generate an integer, nothing else" \
+                 f" ONLY AN INTEGER IN THE RESPONSE"
+    return openai_response_call(fullprompt,temperature=0)
 
 def gold_gained_or_lost(gpt_response):
     fullprompt = f"Using the context of {gpt_response}, generate an integer number to represent an amount of gold" \
@@ -145,5 +146,6 @@ def gold_gained_or_lost(gpt_response):
                  f" as thieves attacking, or finding a bag of gold or treasure. If the player is not robbed, or does" \
                  f" does not find anything, generate 0. If the player is robbed, such as being attacked by bandits or" \
                  f"loses some items, generate a negative number. If the player finds treasure or picks up various items," \
-                 f"generate a positive number. Only generate an integer, nothing else such as units"
-    return openai_response_call(fullprompt)
+                 f"generate a positive number. Only generate an integer, nothing else such as units. ONLY AN INTEGER" \
+                 f" IN THE RESPONSE"
+    return openai_response_call(fullprompt, temperature=0)

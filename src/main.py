@@ -66,30 +66,17 @@ def get_node_data(node_id: int = Query(..., title="node-id"), player_id: int = Q
     return JSONResponse(content=response_data)
 
 class Context(BaseModel):
-    node_id: int = Query(..., title="node-id")
-    player_id: int = Query(..., title="player-id")
+    user_input: str
     context: str
-
-def extract_context_and_usertext(context: str):
-    lines = context.split("\n")
-    area = ""
-    context = ""
-    user_resp = ""
-    for line in lines:
-        if line.startswith("Area:"):
-            area = line[len("Area:"):]
-        elif line.startswith("Narrator:"):
-            context = line[len("Narrator:"):]
-        elif line.startswith("Player:"):
-            user_resp = line[len("Player:"):]
-    return context.strip(), user_resp.strip()
-
+    player_id: int
+    node_id: int
 
 @app.post("/interact")
 async def get_player_response(request: Context):
-    node_context, user_response = extract_context_and_usertext(request.context)
-    node_id = request.node_id
+    node_context = request.context
+    user_response = request.user_input
     player_id = request.player_id
+    node_id = request.node_id
     board.playertile = node_id
     tile = choose_event_type(node_id)
     seed = node_id
