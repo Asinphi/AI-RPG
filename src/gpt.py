@@ -31,7 +31,7 @@ def choose_event_type(node_id):
         if weight_sum > p:
             tile_type = possible_tile_type
             break
-    return possible_tile_type
+    return tile_type
 
 
 
