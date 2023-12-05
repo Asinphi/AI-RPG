@@ -10,6 +10,7 @@ from src.boardmatrix import BoardMatrix
 from src.twodarray import TwoDArray
 from src.gpt import *
 import random
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -63,19 +64,32 @@ def get_node_data(node_id: int = Query(..., title="node-id"), player_id: int = Q
         treasure_worth = 0
     response_data = {"node_name": node_name, "event": event, "player-id": player_id, "treasure": treasure_worth}
     return JSONResponse(content=response_data)
-def extract_userresp(context: str):
-    text_index = context.find("Player:")
-    if text_index != -1:
-        newline_index = context.find("\n", text_index)
-        if newline_index != -1:
-            user_resp = context[text_index + len("Player:"):newline_index].strip()
-            return user_resp
-    return ""
+
+class Context(BaseModel):
+    node_id: int = Query(..., title="node-id")
+    player_id: int = Query(..., title="player-id")
+    context: str
+
+def extract_context_and_usertext(context: str):
+    lines = context.split("\n")
+    area = ""
+    context = ""
+    user_resp = ""
+    for line in lines:
+        if line.startswith("Area:"):
+            area = line[len("Area:"):]
+        elif line.startswith("Narrator:"):
+            context = line[len("Narrator:"):]
+        elif line.startswith("Player:"):
+            user_resp = line[len("Player:"):]
+    return context.strip(), user_resp.strip()
+
 
 @app.post("/interact")
-def get_player_response(context: str = Body(...,), node_id: int = Query(..., title="node-id"), player_id: int = Query(..., title="player-id")):
-    user_response = extract_userresp(context)
-    node_context = context
+async def get_player_response(request: Context):
+    node_context, user_response = extract_context_and_usertext(request.context)
+    node_id = request.node_id
+    player_id = request.player_id
     board.playertile = node_id
     tile = choose_event_type(node_id)
     seed = node_id
