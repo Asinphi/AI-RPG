@@ -58,23 +58,34 @@ def get_node_data(node_id: int = Query(..., title="node-id"), player_id: int = Q
     else:
         event = ""
     if(tile == "treasure"):
-        treasure_worth = gold_gained_or_lost(event)
+        treasure_worth = int(gold_gained_or_lost(event))
     else:
         treasure_worth = 0
     response_data = {"node_name": node_name, "event": event, "player-id": player_id, "treasure": treasure_worth}
     return JSONResponse(content=response_data)
+def extract_userresp(context: str):
+    text_index = context.find("Player:")
+    if text_index != -1:
+        newline_index = context.find("\n", text_index)
+        if newline_index != -1:
+            user_resp = context[text_index + len("Player:"):newline_index].strip()
+            return user_resp
+    return ""
+
 @app.post("/interact")
-def get_player_response(context: str, user_text: str, node_id: int = Query(..., title="node-id"), player_id: int = Query(..., title="player-id")):
-    user_response = user_text
+def get_player_response(context: str = Body(...,), node_id: int = Query(..., title="node-id"), player_id: int = Query(..., title="player-id")):
+    user_response = extract_userresp(context)
     node_context = context
     board.playertile = node_id
     tile = choose_event_type(node_id)
     seed = node_id
     if(tile != "blank"):
-        event = gpt_response_call(tile, seed, setting, user_response, node_context)
+        response = gpt_response_call(tile, seed, setting, user_response, node_context)
     else:
-        event = ""
-    gold_change = gold_gained_or_lost(event)
-    health_change = hp_gained_or_lost(event)
-    response_data = {"player-id": player_id, "response": event, "gold_change": gold_change, "health_change": health_change}
+        response = ""
+    gold_change = int(gold_gained_or_lost(response))
+    health_change = int(hp_gained_or_lost(response))
+    response_data = {"player-id": player_id, "response": response, "gold_change": gold_change, "health_change": health_change}
     return JSONResponse(content=response_data)
+
+
